@@ -1,5 +1,5 @@
 <div class="container-fluid justify-content-center">
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-dark navbar-expand-lg bg-primary text-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">SISTEMA WEB</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -28,22 +28,22 @@
             <p>
             <div class="container text-center">
                 <div class="row bg-primary">
-                    <div class="col py-2 text-light">
+                    <div class="col np text-light">
                         Nome </div>
-                    <div class="col py-2 text-light">
+                    <div class="col np text-light">
                         Endereço </div>
-                    <div class="col py-2 text-light">
+                    <div class="col np text-light">
                         Bairro </div>
-                    <div class="col py-2 text-light"> Ações
+                    <div class="col np text-light"> Ações
                     </div>
                 </div>
                 {{#each posts}}
                 {{#dataValues}}
                 <div class="row border align-items-center">
-                    <div class="col py-2 text-blue"> {{nome}} </div>
-                    <div class="col py-2 text-blue"> {{endereco}} </div>
-                    <div class="col py-2 text-blue"> {{bairro}} </div>
-                    <div class="col py-2 text-blue">
+                    <div class="col np text-blue"> {{nome}} </div>
+                    <div class="col np text-blue"> {{endereco}} </div>
+                    <div class="col np text-blue"> {{bairro}} </div>
+                    <div class="col np text-blue">
                         <a href="/editar/{{id}}" class="btn btn-primary">Editar</a>
                         <a href="/excluir/{{id}}" class="btn btn-danger">Excluir</a>
                     </div>
