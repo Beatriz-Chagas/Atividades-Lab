@@ -1,62 +1,61 @@
-const express = require('express')
-const app = express()
-const handlebars = require("express-handlebars").engine
-const bodyParser = require("body-parser")
-require('./models/banco')
-const post = require('./models/post')
-const { where } = require('sequelize')
+const express = require('express');
+const app = express();
+const { engine } = require('express-handlebars');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
+const morgan = require('morgan');
 
-app.engine("handlebars", handlebars({ defaultLayout: "main" }))
-app.set("view engine", "handlebars")
+const serviceAccount = require('./serviceAccountKey.json');
+initializeApp({
+    credential: cert(serviceAccount),
+});
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+const db = getFirestore();
+db.settings({
+    ignoreUndefinedProperties: true,
+});
 
-app.get("/", (req, res) => {
-    res.render('primeira_pagina')
-})
+app.engine('handlebars', engine({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
-app.get("/consulta", (req, res) => {
-    post.Agendamentos.findAll()
-    .then((posts) => {
-        res.render('consulta', {posts: posts})
-    }) 
-    .catch((error) => {
-        console.error('Não foi possivel buscar os dados', error);
-    })
-})
+app.use(cors());
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.get("/editar/:id", (req, res) => {
-    post.Agendamentos.findAll({ where:{"id": req.params.id} })
-    .then((post) => {
-        res.render("editar", {post:post})
-    })
-    .catch((error) => {
-        console.error('Não foi possivel buscar os dados', error);
-    })
-})
-app.post("/editar-usuario/:id", (req, res) => {
-    post.Agendamentos.update({ ...req.body },{ where:{"id": req.params.id}}).then(() => {
-        res.redirect('/consulta')
-    })
-})
-app.get("/excluir/:id", (req, res) => {
-    post.Agendamentos.destroy({where:{"id": req.params.id}})
-    .then(() => {
-        res.redirect('/consulta')
-    }) 
-})
+app.get('/', async (req, res) => {
+    res.render("primeira_pagina");
+});
 
-app.post("/cadastrar", (req, res) => {
-    post.Agendamentos.create(req.body)
-    .then(() => {
-        res.redirect('/consulta')
-    })
-    .catch((erro) => {
-        res.send(erro)
-    })
-})
+app.post("/cadastrar", async (req, res) => {
+    const { nome, telefone, origem, servico, endereco, email } = req.body;
+
+    if (!nome || !telefone || !origem) {
+        return res.status(400).send('Nome, Telefone, and Origem are required.');
+    }
+
+    const data = {
+        nome: nome || null,
+        telefone: telefone || null,
+        origem: origem || null,
+        email: email || null,
+        status: 'Novo',
+        servico: servico || null,
+        endereco: endereco || null,
+    };
+
+    try {
+        await db.collection('clientes').add(data);
+        console.log('Dados cadastrados:', data);
+        res.redirect('/');
+    } catch (err) {
+        console.error('Erro ao cadastrar: ', err);
+        res.status(500).send('Erro ao cadastrar');
+    }
+});
 
 app.listen(8081, () => {
-    console.log('Rodando na porta 8081');
-})
+    console.log('Servidor rodando na url http://localhost:8081');
+});
