@@ -48,7 +48,7 @@ app.post("/cadastrar", async (req, res) => {
 
     try {
         await db.collection('clientes').add(data);
-        console.log('Dados cadastrados:', data);
+        console.log('Informações cadastradas:', data);
         res.redirect('/');
     } catch (err) {
         console.error('Erro ao cadastrar: ', err);
