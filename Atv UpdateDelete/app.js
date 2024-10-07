@@ -6,105 +6,93 @@ const bodyParser = require('body-parser');
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
 
-const serviceAccount = require('./labprojetodalton-firebase-adminsdk-m0f1v-d88e4b906f.json')
+const serviceAccount = require('./lab-dsm-437915-66e879d55099.json');
 
 initializeApp({
     credential: cert(serviceAccount)
-})
+});
 
 const db = getFirestore()
 
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
+app.engine("handlebars", handlebars({ defaultLayout: 'main' }));
+app.set("view engine", "handlebars");
+app.engine('handlebars', handlebars({ 
+    helpers: {
+        eq: function (v1, v2) {
+          return v1 === v2
+        }
+    },  
+    defaultLayout: 'main' 
+}))
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.get("/", function (req, res) {
-    res.render("cadastro")
-})
+app.get("/", (req, res) => {
+    res.render("primeira_pagina")
+});
 
-app.post("/cadastrar", function (req, res) {
-    db.collection('clientes').add({
+app.get("/consulta", async (req, res) => {
+    const clientesRef = db.collection('clientes');
+    const snapshot = await clientesRef.get();
+    let datavalues = []
+    snapshot.forEach(function(doc){
+        const data = doc.data()
+        data.id = doc.id
+        datavalues.push(data)
+    })
+    res.render("consulta", { data: datavalues })
+});
+
+app.post("/cadastrar", (req, res) => {
+    var result = db.collection('clientes').add({
         nome: req.body.nome,
         telefone: req.body.telefone,
         origem: req.body.origem,
         data_contato: req.body.data_contato,
-        observacao: req.body.observacao
-    }).then(function () {
-        console.log("Informações cadastradas com sucesso!");
-        res.send("Informações cadastradas com sucesso!");
-    }).catch(function (error) {
-        console.error("Erro ao cadastrar: ", error);
-        res.status(500).send("Erro ao cadastrar Informações.");
-    });
+        observacao: req.body.observacao,
+    }).then(() => {
+        console.log("Cadastrado com sucesso!");
+        res.redirect('/consulta');
+    }).catch((erro) => {
+        res.send("Erro:" + erro);
+    })
 });
 
-app.get("/editar/:id", async (req, res) => {
-    const iduser = req.params.id;
+app.post("/edicao", async (req, res) => {
+    const data = req.body;
 
+    const clientesRef = db.collection('clientes');
+
+    await clientesRef.doc(data['id']).set({
+        nome: data['nome'],
+        telefone: data['telefone'],
+        origem: data['origem'],
+        data_contato: data['data_contato'],
+        observacao: data['observacao']
+      }
+    );
+    
+    res.redirect('/consulta');
+});
+
+app.get("/editar/:id", async (req, res) =>{
+    const iduser = req.params.id;
+    
     const clientesRef = db.collection('clientes').doc(iduser);
     const snapshot = await clientesRef.get();
     let datavalues = snapshot['_fieldsProto']
-
-    res.render("editar", { posts: datavalues })
-})
-
-app.get("/consultar", function (req, res) {
-    var posts = []
-    db.collection('clientes').get().then(
-        function (snapshot) {
-            snapshot.forEach(function (doc) {
-                const data = doc.data()
-                data.id = doc.id
-                posts.push(data)
-            })
-            console.log(posts)
-            res.render('consulta', { posts: posts })
-        }
-    )
+    
+    res.render("editar", { data: datavalues, id: iduser })
 });
 
-app.post("/excluir/:id", function (req, res) {
-    const id = req.params.id;
+app.get("/excluir/:id", async (req, res) => {
+    const iduser = req.params.id;
 
-    db.collection('clientes').doc(id).delete()
-        .then(function () {
-            console.log("Cliente excluído com sucesso!");
-            res.send("Cliente excluído com sucesso!");
-            res.redirect("/consulta")
-        })
-        .catch(function (error) {
-            console.error("Erro ao excluir cliente: ", error);
-            res.status(500).send("Erro ao excluir cliente.");
-        });
-});
+    await db.collection('clientes').doc(iduser).delete();
 
-app.post("/atualizar/:id", function (req, res) {
-    const id = req.params.id;
-
-    console.log("ID recebido:", id);
-
-    const InformaçõesAtualizadas = {
-        nome: req.body.nome,
-        telefone: req.body.telefone,
-        origem: req.body.origem,
-        data_contato: req.body.data_contato,
-        observacao: req.body.observacao
-    };
-
-    db.collection('clientes').doc(id).update(InformaçõesAtualizadas)
-        .then(function () {
-            console.log("Informações atualizados com sucesso!");
-            res.send("Informações atualizados com sucesso!");
-        })
-        .catch(function (error) {
-            console.error("Erro ao atualizar: ", error);
-            res.status(500).send("Erro ao atualizar Informações.");
-        });
+    res.redirect('/consulta');
 });
 
 
-app.listen(8081, function () {
-    console.log("Servidor Ativo!")
-})
+app.listen(8081, () => { console.log("Servidor ativo! http://localhost:8081/") })

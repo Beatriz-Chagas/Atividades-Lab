@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "lab-dsm-437915",
+  "private_key_id": "66e879d5509919ec860199363f9c091d541e0da5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDGA6xS4XqFybY+\n/NKXXuU8sSHZKxugA86GI1NXtxUP/Ck0FeycUk8BLqhNi/hBcQ41V4wmEhuT0kLZ\nVfC3YDvpBodkZP6O3WkltlTIJqQQdIq35AxcSjA0rbdMZVxS1Cs0h6Lt1lZPTc1y\nqj83JJ5C0ceDUXi5bRDTdxIF9LXUQ/32K7H79T6X164ZQQIDSFL7y+gxLrtP9bRw\nPBQFWnvcIpmXbaHWWcao/fhQDsThjjKiB8YGy+EPppP2xZ5pFcsQCugglm16VPwW\nr1mZNGqbiPmqLeWWV4HGWvbN2cWmBNHfXvqMbU4fCY45z8PQoozel8Md1NgD648B\ne5W7kw7bAgMBAAECggEADc2mvxZRvK7NggGMypmGYF82rVVYdSSeynH+9s/f63/X\n/XYDyvff4wS2HcXClglEBMroDaVYf8r59v2LLLVMJ9fZK1Hw/tOHZ2YY7eTnre/5\n1YzTocFYL+vmKbCtKWb55g0IegzlclzJlBMzGex3DdBi2JAe2so0EJGt03V2EWhW\neJx2+F7/S6DScdAzyuObBvR4zpRoe6n3WnXR4k81FtaE7xzqaJvEUT2Lmsepyi4T\nbvy1W9Afgq/q1+dFIIrwqkpUVpf2V0bNRgbHcGo7AWz3EbThrryiePw9eHSXucJ1\nbqpdIfFBuXDvWSz6VHUWPd5Cc4o9onFjeBxWuUpMTQKBgQDzjbPWS5Eb0iDldIlP\nk37DlUcTFHmLtuEIU8p9kcuy4zBcC6tidsMxE5nuF2i5nV+0YTUMlQMBZ83UA15d\n2rs/bNqgONQ3r5RYLCVWEtHSx6cND3MkYdZ29X0BsUecm5N3lonqMA77ompX1GQ+\n/LDfKirAjV3zdyXX+aWTdYBKVQKBgQDQIjPo+o52LLq672COJfc77n1y9l39lPcH\nQfM1HBvOGOFxQnjlNdTmf72YDtSwoxX/xtM1lz7lKGWmfhX4a5uQP1xm5cClEN+Y\n6iwD9l0FnwrUqt7gRTaH4ZweJZ4Ac3jERPorxfI/ZT77jWIh7Zz4GE9LB6uHWhYo\nz8E6lSOEbwKBgQCQE4aMQZ2w2IhPVLYZ1gYKS1eFSPpyFRhgJblGuSXISC+Gc/zJ\nvbnQYWkQ+NYh36ALA+ou7EOf5DlVrzx2xvs4FPvsBlI8MujNlCfuGCn5x9PhnP8f\nSaVmL+joRGg5k6sT9oDVgeKLJ1RDash2nmM/USGDUN2ANj6z2eICLmNbFQKBgAKM\nCJqXRlsH3RkgiMv0hvwCxSI9BZVu1z8NfY5u06BICao7KAOWDw7rDUTpGY030bMZ\nmcgUG77uKaBJ9rbdij/Ppq/Tq/HZLQNQCk3aG/VPpvBHTwbrkelDx4dO6ooS3613\nMqCKgZZpBMZLSqIjqEIY+g9u/phfb9n8AN9Yp+CdAoGAQubi2HJPM7SvOdm/xOPr\nmNQ7XVW6ZyVb6+yGzmszG9sllA4DViBS9dtyu5bPa0wHKEfAIC+yoUX0wFDdN8Cn\n304SS2fcjXmv/FauMTzl8YNHsn3yGDYmDxtLs0WUsKd4IfnJAsob+q33u7hnxumc\n99KZHEMwnNOh6Ot+bfgga3U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "atv-lab-dsm@lab-dsm-437915.iam.gserviceaccount.com",
+  "client_id": "105175004427413909124",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/atv-lab-dsm%40lab-dsm-437915.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
